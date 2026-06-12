@@ -1,0 +1,34 @@
+{
+    "name": "handlebarsfield",
+    "description": "TODO.",
+    "version": "0.0.0",
+    "author": "emait",
+    "private": true,
+    "type": "module",
+    "icon": "https://martinsutka.github.io/icongenerator/#dGl0bGU9ZmllbGQmanNvbj17InNob3dHdWlkZXMiOnRydWUsImfFDlNpemUiOjY0yBBYIjowyAxZxQxpY29uxiY4xw7GJMQKWSI6M8YKQ29sb3IiOiIjZmZjMzE0Isc4aGFkb3fLHMQBzRzGWjQ4zBRJbnRlbnNpdHkiOjHHaVN2ZyI6IjxzdmcgeG1sbnM9XCJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Z1wiIHdpZHRoPVwiMWVtXCIgaGVpZ2h0yQ92aWV3Qm94PVwiMCAwIDE0IDE0XCI+XG5cdDxwYXRoIGZpbGw9XCJjdXJyZW505QC+XCLFFi1ydWxlPVwiZXZlbm9kZFwiIGQ9XCJNNCAxLjc1YS43NS43NSDEVcVZLjVoLjI1djcuNUg01B0yzxUtxBUtxDMtxDQ20x96TTMgNC41SDFhMSAxyBcgMXYzyhAgMSAxaDJ6bTQgNWg2zBctMXYtyygtMS0xSDd6XCIgY2xpcPIA2i8+XG485AFPPuQBsXNCYWNrZ3JvdW5kVHJhbnNwYeQBHCI6ZmFsc2UsImLJHlfkAXoiOjEyOMwWSOUBgtEX6QIaMjTEAiLMHEzEMskhN2TEAtIh6wIsNTXMHu8CezDFAc1A7QKBzBlCb3JkZXJSYWRpdXMiOjbkAoNzQmFkZ2X2APpkZ2XyAuLFF+oBNMkhYTBjNTk4yCFUZXh0IjoiyA9Gb8RZIjcwMCAxNnB4IEFyaWFsyB3mAKkyNH0=",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/info-emait/HandlebarsField"
+    },
+    "scripts": {
+        "dev": "vite",
+        "prebuild": "npm version patch --no-git-tag-version",
+        "build": "vite build && node scripts/generateExtensionManifest.js",
+        "predebug": "npm version patch --no-git-tag-version",
+        "debug": "vite build --mode debug && node scripts/generateExtensionManifest.js",
+        "preview": "vite preview",
+        "package": "tfx extension create --root dist --manifest-globs vss-extension.json --output-path dist && node scripts/cleanupDist.js"
+    },
+    "devDependencies": {
+        "esbuild": "^0.28.1",
+        "sass": "^1.101.0",
+        "tfx-cli": "^0.23.1",
+        "vite": "^8.0.16"
+    },
+    "dependencies": {
+        "azure-devops-extension-api": "^5.273.0",
+        "azure-devops-extension-sdk": "^5.0.0",
+        "azure-devops-ui": "^2.273.4",
+        "handlebars": "^4.7.9"
+    }
+}
