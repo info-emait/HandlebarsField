@@ -1,0 +1,111 @@
+{
+    "manifestVersion": 1,
+    "id": "#{Id}#",
+    "version": "#{Version}#",
+    "name": "Handlebars field",
+    "description": "#{Description}#",
+    "publisher": "#{Publisher}#",
+    "public": true,
+    "categories": [
+        "Azure Boards"
+    ], 
+    "targets": [{
+        "id": "Microsoft.VisualStudio.Services"
+    }],
+    "icons": {
+        "default": "img/logo.png"
+    },
+    "screenshots": [{
+        "path": "img/screenshot1.gif"
+    }, {
+        "path": "img/screenshot2.png"
+    }],
+    "tags": [
+        "wit", "work item", "roll up", "field", "handlebars", "template", "summary", "control", "form", "input"
+    ],
+    "links": {
+        "support": {
+            "uri": "mailto:info.emait@gmail.com"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/info-emait/HandlebarsField"
+    },
+    "content": {
+        "details": {
+            "path": "Overview.md"
+        },
+        "license": {
+            "path": "License.md"
+        }
+    },
+    "branding": {
+        "color": "#212121",
+        "theme": "dark"
+    },
+    "contributions": [{
+        "id": "#{Id}#-field",
+        "type": "ms.vss-work-web.work-item-form-control",
+        "description": "TODO.",
+        "targets": [
+            "ms.vss-work-web.work-item-form"
+        ],
+        "properties": {
+            "registeredObjectId": "#{Id}#-field",
+            "name": "Handlebars field",
+            "description": "TODO.",
+            "previewImageUrl": "img/preview.png",
+            "uri": "field.html?v=#{Version}#",
+            "height": 50,
+            "inputs": [{
+                "id": "FieldName",
+                "name": "Field name:",
+                "description": "TODO.",
+                "type": "WorkItemField",
+                "properties": {
+                    "workItemFieldTypes": [ "String", "Integer", "Double", "PlainText", "DateTime" ]
+                },
+                "validation": {
+                    "dataType": "String",
+                    "isRequired": true
+                }
+            }, {
+                "id": "FieldFunction",
+                "name": "Roll up function:",
+                "description": "TODO.",
+                "inputMode": "TextArea",
+                "validation": {
+                    "dataType": "String",
+                    "isRequired": true
+                }
+            }, {
+                "id": "FieldTemplate",
+                "name": "Template:",
+                "description": "TODO.",
+                "inputMode": "TextArea",
+                "validation": {
+                    "dataType": "String",
+                    "isRequired": true
+                }
+            }, {
+                "id": "LinkTypes",
+                "name": "Link types:",
+                "description": "TODO.",
+                "validation": {
+                    "dataType": "String",
+                    "isRequired": false
+                }
+            }]
+        }
+    }],
+    "files": [
+        { "path": "field.html", "addressable": true },
+        { "path": "img", "addressable": true },
+        { "path": "assets", "addressable": true }
+    ],
+    "scopes":[
+        "vso.work",
+        "vso.work_write"
+    ]
+}
