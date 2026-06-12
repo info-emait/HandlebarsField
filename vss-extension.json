@@ -45,18 +45,18 @@
         "theme": "dark"
     },
     "contributions": [{
-        "id": "#{Id}#-field",
+        "id": "#{Id}#-control",
         "type": "ms.vss-work-web.work-item-form-control",
         "description": "TODO.",
         "targets": [
             "ms.vss-work-web.work-item-form"
         ],
         "properties": {
-            "registeredObjectId": "#{Id}#-field",
+            "registeredObjectId": "#{Id}#-control",
             "name": "Handlebars field",
             "description": "TODO.",
             "previewImageUrl": "img/preview.png",
-            "uri": "field.html?v=#{Version}#",
+            "uri": "control.html?v=#{Version}#",
             "height": 50,
             "inputs": [{
                 "id": "FieldName",
@@ -100,7 +100,7 @@
         }
     }],
     "files": [
-        { "path": "field.html", "addressable": true },
+        { "path": "control.html", "addressable": true },
         { "path": "img", "addressable": true },
         { "path": "assets", "addressable": true }
     ],
