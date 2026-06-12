@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
             cssMinify: isDebug ? false : "esbuild",
             rolldownOptions: {
                 input: {
-                    "field": resolve(__dirname, "field.html")
+                    "control": resolve(__dirname, "control.html")
                 }
             }
         },
