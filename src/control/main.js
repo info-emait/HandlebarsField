@@ -1,5 +1,6 @@
 import * as sdk from "azure-devops-extension-sdk";
 import { log, ready } from "@utils";
+import { Control } from "./control.js"; 
 import "./control.scss";
 
 //#region [ Start ]
@@ -16,7 +17,8 @@ ready(async () => {
     await sdk.ready();
     log("Sdk is ready.");
 
-    sdk.register("handlebarsfield-control", () => {});
+    // Register control with the call 'sdk.getContributionId()' instead of '#{Extension.Id}#-control' string
+    sdk.register(sdk.getContributionId(), () => new Control());
     log("Handlebars field is registered.");
     sdk.notifyLoadSucceeded();
 });

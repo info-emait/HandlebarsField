@@ -57,7 +57,7 @@
             "description": "TODO.",
             "previewImageUrl": "img/preview.png",
             "uri": "control.html?v=#{Version}#",
-            "height": 50,
+            "height": 43,
             "inputs": [{
                 "id": "FieldName",
                 "name": "Field name:",
