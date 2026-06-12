@@ -19,7 +19,7 @@ ready(async () => {
 
     // Register control with the call 'sdk.getContributionId()' instead of '#{Extension.Id}#-control' string
     sdk.register(sdk.getContributionId(), () => new Control());
-    log("Handlebars field is registered.");
+    log("Handlebars Field is registered.");
     sdk.notifyLoadSucceeded();
 });
 

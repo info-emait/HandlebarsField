@@ -17,13 +17,24 @@ export class Control {
     constructor (args = {}) {
         log("Control()", this);
 
-        this.id = null; 
+        this.id = null;
+        this.inputs = null;
     }
 
     //#endregion
 
     
     //#region [ Methods : Public ]
+
+    /**
+     * Sets the field value.
+     * 
+     * @param {object} value Value to set.
+     */
+    setValue (value) {
+        log("Control : setValue()", value);
+    }
+
 
     /**
      * Resizes the view.
@@ -35,6 +46,10 @@ export class Control {
         // }, 1);
     }
 
+    //#endregion
+
+
+    //#region [ Event Handlers ]
 
     /**
      * Called when a new work item is being loaded in the UI.
@@ -45,6 +60,7 @@ export class Control {
         log("Control : onLoaded()", e);
         
         this.id = e.id;
+        this.inputs = sdk.getConfiguration().witInputs;
     }
 
 
@@ -86,7 +102,6 @@ export class Control {
      */
     onReset (e) {
         log("Control : onReset()", e);
-        //this.onRefreshed(e);
     };
 
 
@@ -98,26 +113,6 @@ export class Control {
     onRefreshed (e) {
         log("Control : onRefreshed()", e);
     };    
-
-
-    /**
-     * Sets the field value.
-     * 
-     * @param {object} value Value to set.
-     */
-    setValue (value) {
-        log("Control : setValue()", value);
-        // this.witService.WorkItemFormService.getService()
-        //     .then((function(service) {
-        //         if ((value === this.value()) && !this.isRequired()) {
-        //             this.value(null);
-        //             return service.setFieldValue(this.fieldName(), null);
-        //         }
-
-        //         this.value(value);
-        //         return service.setFieldValue(this.fieldName(), value);
-        //     }).bind(this));
-    }
 
     //#endregion
 }

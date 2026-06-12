@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "#{Id}#",
     "version": "#{Version}#",
-    "name": "Handlebars field",
+    "name": "Handlebars Field",
     "description": "#{Description}#",
     "publisher": "#{Publisher}#",
     "public": true,
@@ -53,7 +53,7 @@
         ],
         "properties": {
             "registeredObjectId": "#{Id}#-control",
-            "name": "Handlebars field",
+            "name": "Handlebars Field",
             "description": "TODO.",
             "previewImageUrl": "img/preview.png",
             "uri": "control.html?v=#{Version}#",
@@ -71,7 +71,7 @@
                     "isRequired": true
                 }
             }, {
-                "id": "FieldFunction",
+                "id": "Function",
                 "name": "Roll up function:",
                 "description": "TODO.",
                 "inputMode": "TextArea",
@@ -80,7 +80,7 @@
                     "isRequired": true
                 }
             }, {
-                "id": "FieldTemplate",
+                "id": "Template",
                 "name": "Template:",
                 "description": "TODO.",
                 "inputMode": "TextArea",
