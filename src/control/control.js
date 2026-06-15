@@ -17,8 +17,16 @@ export class Control {
     constructor (args = {}) {
         log("Control()", this);
 
+        this.node = null;
+
         this.id = null;
         this.inputs = null;
+        this.field = null;
+        this.template = null;
+        this.helpers = null;
+        this.linkTypes = null;
+
+        this.wit = null;
     }
 
     //#endregion
@@ -40,10 +48,11 @@ export class Control {
      * Resizes the view.
      */
     resize () {
-        // setTimeout(() => {
-        //     const view = doc.querySelector(".xxx");
-        //     sdk.resize(Math.max(view.offsetWidth, view.scrollWidth) + 8, Math.max(view.offsetHeight, view.scrollHeight) + 8);
-        // }, 1);
+        setTimeout(() => {
+            const view = this.node;
+            //sdk.resize(Math.max(view.offsetWidth, view.scrollWidth) + 8, Math.max(view.offsetHeight, view.scrollHeight) + 8);
+            sdk.resize(Math.max(view.offsetWidth, view.scrollWidth), Math.max(view.offsetHeight, view.scrollHeight));
+        }, 1);
     }
 
     //#endregion
@@ -56,11 +65,24 @@ export class Control {
      * 
      * @param {object} e Event arguments.
      */
-    onLoaded (e) {
+    async onLoaded (e) {
         log("Control : onLoaded()", e);
         
+        this.node = document.querySelector(".handlebarsfield-control__content");
+        this.node.innerHTML = "... loading";
+        this.resize();
+
+        // Get configuration
         this.id = e.id;
         this.inputs = sdk.getConfiguration().witInputs;
+        this.field = this.inputs?.field;
+        this.template = this.inputs?.template;
+        this.helpers = this.inputs?.helpers || "";
+        this.linkTypes = (this.inputs?.linkTypes || "").split(",").filter((lt) => lt.length);
+
+        // Load data
+        this.wit = (await devops.get(`/_apis/wit/workItems`, { "ids": this.id, "$expand": "all" }))?.value[0];
+        //this.resize();
     }
 
 
