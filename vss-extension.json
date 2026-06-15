@@ -59,7 +59,7 @@
             "uri": "control.html?v=#{Version}#",
             "height": 43,
             "inputs": [{
-                "id": "FieldName",
+                "id": "field",
                 "name": "Field name:",
                 "description": "TODO.",
                 "type": "WorkItemField",
@@ -71,16 +71,7 @@
                     "isRequired": true
                 }
             }, {
-                "id": "Function",
-                "name": "Roll up function:",
-                "description": "TODO.",
-                "inputMode": "TextArea",
-                "validation": {
-                    "dataType": "String",
-                    "isRequired": true
-                }
-            }, {
-                "id": "Template",
+                "id": "template",
                 "name": "Template:",
                 "description": "TODO.",
                 "inputMode": "TextArea",
@@ -89,7 +80,16 @@
                     "isRequired": true
                 }
             }, {
-                "id": "LinkTypes",
+                "id": "helpers",
+                "name": "Helpers:",
+                "description": "TODO.",
+                "inputMode": "TextArea",
+                "validation": {
+                    "dataType": "String",
+                    "isRequired": false
+                }
+            }, {
+                "id": "linkTypes",
                 "name": "Link types:",
                 "description": "TODO.",
                 "validation": {
