@@ -1,5 +1,6 @@
 import * as sdk from "azure-devops-extension-sdk";
 import { CommonServiceIds } from "azure-devops-extension-api";
+import Handlebars from "handlebars";
 import * as devops from "@utils/devops";
 import { log } from "@utils";
 
@@ -26,7 +27,9 @@ export class Control {
         this.helpers = null;
         this.linkTypes = null;
 
+        this.user = null;
         this.wit = null;
+        this.value = null;
     }
 
     //#endregion
@@ -49,9 +52,8 @@ export class Control {
      */
     resize () {
         setTimeout(() => {
-            const view = this.node;
-            //sdk.resize(Math.max(view.offsetWidth, view.scrollWidth) + 8, Math.max(view.offsetHeight, view.scrollHeight) + 8);
-            sdk.resize(Math.max(view.offsetWidth, view.scrollWidth), Math.max(view.offsetHeight, view.scrollHeight));
+            const view = document.body.firstChild;
+            sdk.resize(Math.max(view.offsetWidth, view.scrollWidth) + 8, Math.max(view.offsetHeight, view.scrollHeight) + 8);
         }, 1);
     }
 
@@ -68,7 +70,7 @@ export class Control {
     async onLoaded (e) {
         log("Control : onLoaded()", e);
         
-        this.node = document.querySelector(".handlebarsfield-control__content");
+        this.node = document.body;
         this.node.innerHTML = "... loading";
         this.resize();
 
@@ -81,8 +83,19 @@ export class Control {
         this.linkTypes = (this.inputs?.linkTypes || "").split(",").filter((lt) => lt.length);
 
         // Load data
+        this.user = sdk.getUser();
         this.wit = (await devops.get(`/_apis/wit/workItems`, { "ids": this.id, "$expand": "all" }))?.value[0];
-        //this.resize();
+        this.value = this.wit.fields[this.field];
+
+        // Render template
+        const template = Handlebars.compile(this.template);
+        this.node.innerHTML = template({
+            user: this.user,
+            wit: this.wit,
+            value: this.value
+        });
+
+        this.resize();
     }
 
 
