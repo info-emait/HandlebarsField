@@ -2,7 +2,7 @@ import * as sdk from "azure-devops-extension-sdk";
 import { CommonServiceIds } from "azure-devops-extension-api";
 import Handlebars from "handlebars";
 import * as devops from "@utils/devops";
-import { log } from "@utils";
+import { log, warn } from "@utils";
 
 /**
  * View model for the field control.
@@ -81,6 +81,22 @@ export class Control {
         this.template = this.inputs?.template;
         this.helpers = this.inputs?.helpers || "";
         this.linkTypes = (this.inputs?.linkTypes || "").split(",").filter((lt) => lt.length);
+
+        // Prepare helpers
+        if (this.helpers.length) {
+            try {
+                this.helpers = new Function(`"use strict"; return ({${this.helpers}});`)();
+                for (const [name, fn] of Object.entries(this.helpers)) {
+                    if (typeof(fn) !== "function") {
+                        throw new Error(`Helper '${name}' is not a function.`);
+                    }
+                    Handlebars.registerHelper(name, fn);
+                }
+            }
+            catch (err) {
+                warn("Control : ", err);
+            }
+        }
 
         // Load data
         this.user = sdk.getUser();
