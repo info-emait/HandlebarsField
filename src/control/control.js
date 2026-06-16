@@ -13,6 +13,9 @@ export class Control {
     /**
      * Constructor.
      * 
+     * Add a custom control to the work item form
+     * https://learn.microsoft.com/en-us/azure/devops/extend/develop/custom-control?view=azure-devops
+     * 
      * @param {object} args Input arguments.
      */
     constructor (args = {}) {
@@ -25,7 +28,7 @@ export class Control {
         this.field = null;
         this.template = null;
         this.helpers = null;
-        this.linkTypes = null;
+        this.loadRelatedWits = null;
 
         this.user = null;
         this.wit = null;
@@ -80,7 +83,7 @@ export class Control {
         this.field = this.inputs?.field;
         this.template = this.inputs?.template;
         this.helpers = this.inputs?.helpers || "";
-        this.linkTypes = (this.inputs?.linkTypes || "").split(",").filter((lt) => lt.length);
+        this.loadRelatedWits = (this.inputs?.loadRelatedWits === "true") ? true : false;
 
         // Prepare helpers
         if (this.helpers.length) {
@@ -102,6 +105,20 @@ export class Control {
         this.user = sdk.getUser();
         this.wit = (await devops.get(`/_apis/wit/workItems`, { "ids": this.id, "$expand": "all" }))?.value[0];
         this.value = this.wit.fields[this.field];
+
+        // Load relations
+        if (this.loadRelatedWits) {
+            const relatedIds = this.wit.relations
+                .map((r) => parseInt(r.url.split("/_apis/wit/workItems/")[1]))
+                .filter((i) => !isNaN(i));
+            const relatedWits = (await devops.get(`/_apis/wit/workItems`, { "ids": relatedIds.join(","), "$expand": "all" }))?.value || [];
+            this.wit.relations.forEach((r) => {
+                const rw = relatedWits.find((rr) => rr.url === r.url);
+                if (rw) {
+                    r.wit = rw;
+                }
+            });
+        }
 
         // Render template
         const template = Handlebars.compile(this.template);

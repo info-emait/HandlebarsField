@@ -89,11 +89,11 @@
                     "isRequired": false
                 }
             }, {
-                "id": "linkTypes",
-                "name": "Link types:",
-                "description": "TODO.",
+                "id": "loadRelatedWits",
+                "name": "Load related work items:",
+                "description": "If set to 'true', all related work items will be loaded, and can be accessed in the template via the 'wit.relations' property.",
                 "validation": {
-                    "dataType": "String",
+                    "dataType": "Boolean",
                     "isRequired": false
                 }
             }]
