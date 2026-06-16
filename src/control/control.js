@@ -77,6 +77,9 @@ export class Control {
         this.node.innerHTML = "... loading";
         this.resize();
 
+        // Handle events
+        this.node.addEventListener("click", this.onClick);
+
         // Get configuration
         this.id = e.id;
         this.inputs = sdk.getConfiguration().witInputs;
@@ -160,7 +163,7 @@ export class Control {
     onSaved (e) {
         log("Control : onSaved()", e);
         //this.onRefreshed(e);
-    };
+    }
 
 
     /**
@@ -170,7 +173,7 @@ export class Control {
      */
     onReset (e) {
         log("Control : onReset()", e);
-    };
+    }
 
 
     /**
@@ -180,7 +183,39 @@ export class Control {
      */
     onRefreshed (e) {
         log("Control : onRefreshed()", e);
-    };    
+    }
+
+
+    /**
+     * Called when the user clicks any hyperlink.
+     * 
+     * @param {object} e Event arguments.
+     */
+    async onClick (e) {
+        let href = e.target.getAttribute("href");
+        let target = e.target.getAttribute("target");
+        
+        if (!href) {
+            const parent = e.target.closest("[href]");
+            if (parent) {
+                href = parent.getAttribute("href");
+                target = parent.getAttribute("target");
+            }
+        }
+
+        if (href) {
+            e.preventDefault();
+            const host = await sdk.getService(CommonServiceIds.HostNavigationService);
+            if (target === "_blank") {
+                host.openNewWindow(href);
+                return;
+            }
+
+            host.navigate(href);
+        }
+
+        return true;
+    }
 
     //#endregion
 }
