@@ -61,7 +61,7 @@
             "inputs": [{
                 "id": "field",
                 "name": "Field name:",
-                "description": "TODO.",
+                "description": "Name of the work item property whose value will be stored in the 'value' attribute when the template is applied.",
                 "type": "WorkItemField",
                 "properties": {
                     "workItemFieldTypes": [ "String", "Integer", "Double", "PlainText", "DateTime" ]
@@ -73,7 +73,7 @@
             }, {
                 "id": "template",
                 "name": "Template:",
-                "description": "TODO.",
+                "description": "Handlebars.js template rendered using a model containing the properties: 'user' (current user information), 'wit' (complete current work item information), and 'value' (the value of the field specified in Field name).",
                 "inputMode": "TextArea",
                 "validation": {
                     "dataType": "String",
@@ -82,7 +82,7 @@
             }, {
                 "id": "helpers",
                 "name": "Helpers:",
-                "description": "TODO.",
+                "description": "Comma-separated list of functions that will be used as helper functions when applying the template: uppercase: (text) => text.toUpperCase(), truncate: (text, len) => text.substring(0, len).",
                 "inputMode": "TextArea",
                 "validation": {
                     "dataType": "String",
