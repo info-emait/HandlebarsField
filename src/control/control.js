@@ -109,29 +109,8 @@ export class Control {
         this.wit = (await devops.get(`/_apis/wit/workItems`, { "ids": this.id, "$expand": "all" }))?.value[0];
         this.value = this.wit.fields[this.field];
 
-        // Load relations
-        if (this.loadRelatedWits) {
-            const relatedIds = this.wit.relations
-                .map((r) => parseInt(r.url.split("/_apis/wit/workItems/")[1]))
-                .filter((i) => !isNaN(i));
-            const relatedWits = (await devops.get(`/_apis/wit/workItems`, { "ids": relatedIds.join(","), "$expand": "all" }))?.value || [];
-            this.wit.relations.forEach((r) => {
-                const rw = relatedWits.find((rr) => rr.url === r.url);
-                if (rw) {
-                    r.wit = rw;
-                }
-            });
-        }
-
-        // Render template
-        const template = Handlebars.compile(this.template);
-        this.node.innerHTML = template({
-            user: this.user,
-            wit: this.wit,
-            value: this.value
-        });
-
-        this.resize();
+        this._loadRelations();
+        this._render();
     }
 
 
@@ -152,6 +131,8 @@ export class Control {
      */
     onFieldChanged (e) {
         log("Control : onFieldChanged()", e);
+        this.value = e.changedFields[this.field];
+        this.onRefreshed({ id: e.id });
     }
 
 
@@ -162,7 +143,7 @@ export class Control {
      */
     onSaved (e) {
         log("Control : onSaved()", e);
-        //this.onRefreshed(e);
+        this.onRefreshed({ id: e.id });
     }
 
 
@@ -181,8 +162,14 @@ export class Control {
      * 
      * @param {object} e Event arguments.
      */
-    onRefreshed (e) {
+    async onRefreshed (e) {
         log("Control : onRefreshed()", e);
+
+        // Load data
+        this.wit = (await devops.get(`/_apis/wit/workItems`, { "ids": e.id, "$expand": "all" }))?.value[0];
+
+        this._loadRelations();
+        this._render();
     }
 
 
@@ -215,6 +202,46 @@ export class Control {
         }
 
         return true;
+    }
+
+    //#endregion
+
+
+    //#region [ Methods : Private ]
+
+    /**
+     * Loads related work items.
+     */
+    async _loadRelations () {
+        if (!this.loadRelatedWits || !this.wit) {
+            return;
+        }
+
+        const relatedIds = this.wit.relations
+            .map((r) => parseInt(r.url.split("/_apis/wit/workItems/")[1]))
+            .filter((i) => !isNaN(i));
+        const relatedWits = (await devops.get(`/_apis/wit/workItems`, { "ids": relatedIds.join(","), "$expand": "all" }))?.value || [];
+        this.wit.relations.forEach((r) => {
+            const rw = relatedWits.find((rr) => rr.url === r.url);
+            if (rw) {
+                r.wit = rw;
+            }
+        });
+    }
+
+
+    /**
+     * Renders the field UI.
+     */
+    _render () {
+        const template = Handlebars.compile(this.template);
+        this.node.innerHTML = template({
+            user: this.user,
+            wit: this.wit,
+            value: this.value
+        });
+
+        this.resize();
     }
 
     //#endregion
