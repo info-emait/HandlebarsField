@@ -109,7 +109,7 @@ export class Control {
         this.wit = (await devops.get(`/_apis/wit/workItems`, { "ids": this.id, "$expand": "all" }))?.value[0];
         this.value = this.wit.fields[this.field];
 
-        this._loadRelations();
+        await this._loadRelations();
         this._render();
     }
 
@@ -168,7 +168,7 @@ export class Control {
         // Load data
         this.wit = (await devops.get(`/_apis/wit/workItems`, { "ids": e.id, "$expand": "all" }))?.value[0];
 
-        this._loadRelations();
+        await this._loadRelations();
         this._render();
     }
 
