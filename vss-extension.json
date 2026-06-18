@@ -96,6 +96,14 @@
                     "dataType": "Boolean",
                     "isRequired": false
                 }
+            }, {
+                "id": "loadingMessage",
+                "name": "Loading message:",
+                "description": "Message showed during data loading. The default value is '... loading'.",
+                "validation": {
+                    "dataType": "String",
+                    "isRequired": false
+                }
             }]
         }
     }],

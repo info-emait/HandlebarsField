@@ -29,6 +29,7 @@ export class Control {
         this.template = null;
         this.helpers = null;
         this.loadRelatedWits = null;
+        this.loadingMessage = null;
 
         this.user = null;
         this.wit = null;
@@ -74,8 +75,6 @@ export class Control {
         log("Control : onLoaded()", e);
         
         this.node = document.body;
-        this.node.innerHTML = "... loading";
-        this.resize();
 
         // Handle events
         this.node.addEventListener("click", this.onClick);
@@ -87,6 +86,10 @@ export class Control {
         this.template = this.inputs?.template;
         this.helpers = this.inputs?.helpers || "";
         this.loadRelatedWits = (this.inputs?.loadRelatedWits === "true") ? true : false;
+        this.loadingMessage = this.inputs?.loadingMessage || "... loading";
+
+        this.node.innerHTML = this.loadingMessage;
+        this.resize();
 
         // Prepare helpers
         if (this.helpers.length) {
