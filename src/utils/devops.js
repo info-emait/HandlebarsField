@@ -94,7 +94,7 @@ export async function get(uri, query, type = "json") {
         }
     };
     
-    const response = await fetch(`${ctx.baseUrl}/${ctx.collection.name}/${ctx.project.name}${uri}?${new URLSearchParams(query || {})}`, prms);
+    const response = await fetch(`${ctx.baseUrl}/${ctx.collection.name}/${ctx.project?.name || ""}${uri}?${new URLSearchParams(query || {})}`, prms);
     if (!response.ok) {
         return null;
     }
@@ -124,7 +124,7 @@ export async function post(uri, query, body = {}, type = "json") {
         body: JSON.stringify(body)
     };
     
-    const response = await fetch(`${ctx.baseUrl}/${ctx.collection.name}/${ctx.project.name}${uri}?${new URLSearchParams(query || {})}`, prms);
+    const response = await fetch(`${ctx.baseUrl}/${ctx.collection.name}/${ctx.project?.name || ""}${uri}?${new URLSearchParams(query || {})}`, prms);
     if (!response.ok) {
         return null;
     }
